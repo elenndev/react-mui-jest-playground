@@ -48,4 +48,22 @@ describe("LoginForm", () => {
     ).toBeInTheDocument();
   })
 
+  it("not allow password with blank space value", () => {
+    render(<LoginForm />)
+    const emailInput = screen.getByTestId("email-input");
+    const passwordInput = screen.getByTestId("password-input")
+
+    const button = screen.getByTestId("login-button")
+
+    fireEvent.change(passwordInput, { target: { value: " " } });
+    fireEvent.change(emailInput, { target: { value: "user@teste.com" } })
+
+
+    fireEvent.click(button);
+    expect(
+      screen.getByText("O campo de senha não pode estar vazio ou conter apenas espaços.")
+    ).toBeInTheDocument();
+  })
+
+
 })
