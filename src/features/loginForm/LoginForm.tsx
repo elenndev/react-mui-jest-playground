@@ -1,14 +1,13 @@
-import React, { useState } from "react"
+import React, { useEffect } from "react"
 import { TextField, Button, Box, Typography, Paper } from "@mui/material"
+import { useLoginForm } from "./useLoginForm";
 
 const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const { email, password, error, handleEmailChange, handlePasswordChange, handleSubmit } = useLoginForm()
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Login:", { email, password })
-  };
+  useEffect(() => {
+    console.log('render')
+  }, [])
 
   return (
     <Paper elevation={3} sx={{ p: 4, maxWidth: 400, mx: "auto", mt: 8 }}>
@@ -22,7 +21,7 @@ const LoginForm: React.FC = () => {
           label="Email"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleEmailChange}
           inputProps={{ "data-testid": "email-input" }}
         />
         <TextField
@@ -31,7 +30,9 @@ const LoginForm: React.FC = () => {
           label="Senha"
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          error={!!error}
+          helperText={error}
+          onChange={handlePasswordChange}
           inputProps={{ "data-testid": "password-input" }}
         />
         <Button
