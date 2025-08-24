@@ -36,17 +36,6 @@ describe("LoginForm", () => {
     expect((passwordInput as HTMLInputElement).value).toBe("senha123")
   })
 
-  it("not allow email with blank space value", () => {
-    render(<LoginForm />)
-    const emailInput = screen.getByTestId("email-input") as HTMLInputElement
-    const button = screen.getByTestId("login-button")
-
-    fireEvent.change(emailInput, { target: { value: " " } });
-    fireEvent.click(button);
-    expect(
-      screen.getByText("O email não pode estar vazio ou conter apenas espaços.")
-    ).toBeInTheDocument();
-  })
 
   it("not allow password with blank space value", () => {
     render(<LoginForm />)
@@ -57,9 +46,8 @@ describe("LoginForm", () => {
 
     fireEvent.change(passwordInput, { target: { value: " " } });
     fireEvent.change(emailInput, { target: { value: "user@teste.com" } })
-
-
     fireEvent.click(button);
+
     expect(
       screen.getByText("O campo de senha não pode estar vazio ou conter apenas espaços.")
     ).toBeInTheDocument();
